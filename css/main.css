@@ -1,0 +1,23 @@
+/*
+	RESET 
+*/
+html, body {
+	height: 100%;
+}
+
+html, body, img, form, input, header, nav, div, ol, ul, li, h1, h2, h3, h4, span, p, a, section, textarea, iframe {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	text-decoration: none;
+	outline: none;
+}
+
+/*
+	GENERAL
+*/
+body {
+	font-family: Lato, Helvetica, Arial, sans-serif;
+	line-height: 150%;
+}
