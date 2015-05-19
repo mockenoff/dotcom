@@ -138,7 +138,7 @@ function Particle() {
 
 		// Detect boundaries
 		if (self.getPosX() - self.getRadius() <= 0 || self.getPosX() + self.getRadius() >= CANVAS_WIDTH) {
-			self.setVelX(self.getVelX() * -1);
+			self.setVelX(self.getVelX() * -1.0);
 		}
 		if (self.getPosY() - self.getRadius() >= CANVAS_HEIGHT) {
 			self.reset();
@@ -177,4 +177,9 @@ document.addEventListener('keydown', function(e){
 	if (e.which === 32) {
 		window.requestAnimationFrame(step);
 	}
+});
+
+// Detect hashchange
+window.addEventListener('hashchange', function(e){
+	console.log(e);
 });
