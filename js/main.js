@@ -1,9 +1,14 @@
 // Set up variables
 var devbox = document.querySelector('#developer'),
-	canvas = devbox.querySelector('#bubbles'),
-	context = canvas.getContext('2d'),
+	devtails = document.querySelector('#developer-details'),
+	writer = document.querySelector('#writer'),
+	writails = document.querySelector('#writer-details'),
+	header = document.querySelector('#header'),
+	amper = document.querySelector('#amper'),
 
 	// Specifically for particles
+	canvas = devbox.querySelector('#bubbles'),
+	context = canvas.getContext('2d'),
 	particles = [],
 	last_draw = undefined,
 
@@ -180,6 +185,47 @@ document.addEventListener('keydown', function(e){
 });
 
 // Detect hashchange
-window.addEventListener('hashchange', function(e){
-	console.log(e);
-});
+function hashCheck(e) {
+	console.log(e, window.location.hash);
+	if (window.location.hash === '#writer') {
+		setDisplay(1);
+	} else if (window.location.hash === '#developer') {
+		setDisplay(2);
+	} else {
+		setDisplay(0);
+	}
+}
+hashCheck();
+window.addEventListener('hashchange', hashCheck);
+
+// Remove all position classes
+function clearPosition(elem) {
+	elem.classList.remove('leftest', 'lefter', 'left', 'right', 'righter', 'rightest');
+	return elem;
+}
+
+// Swap display features
+function setDisplay(display) {
+	if (display === 1) {
+		clearPosition(writails).classList.add('left');
+		clearPosition(writer).classList.add('right');
+		clearPosition(devbox).classList.add('righter');
+		clearPosition(devtails).classList.add('rightest');
+		clearPosition(header).classList.add('right');
+		clearPosition(amper).classList.add('right');
+	} else if (display === 2) {
+		clearPosition(writails).classList.add('leftest');
+		clearPosition(writer).classList.add('lefter');
+		clearPosition(devbox).classList.add('left');
+		clearPosition(devtails).classList.add('right');
+		clearPosition(header).classList.add('left');
+		clearPosition(amper).classList.add('left');
+	} else {
+		clearPosition(writails).classList.add('lefter');
+		clearPosition(writer).classList.add('left');
+		clearPosition(devbox).classList.add('right');
+		clearPosition(devtails).classList.add('righter');
+		clearPosition(header);
+		clearPosition(amper);
+	}
+}

@@ -33,7 +33,26 @@ body {
 	position: absolute;
 	overflow: hidden;
 	background: linear-gradient(180deg, rgba(34, 34, 34, 0.6) 0, rgba(68, 68, 68, 0.6) 100%);
+	transition: left 0.3s ease-in-out;
 }
+	.halfie.left {
+		left: 0;
+	}
+	.halfie.lefter {
+		left: -50%;
+	}
+	.halfie.leftest {
+		left: -100%;
+	}
+	.halfie.right {
+		left: 50%;
+	}
+	.halfie.righter {
+		left: 100%;
+	}
+	.halfie.rightest {
+		left: 150%;
+	}
 	.halfie h2 {
 		position: absolute;
 		width: 100%;
@@ -50,11 +69,30 @@ body {
 			display: block;
 			width: 100%;
 			position: absolute;
-			top: -40px;
+			top: -4vw;
 			color: #FFF;
 			font-family: 'Shadows Into Light', cursive;
 			font-size: 3vw;
 		}
+	.halfie h3 {
+		color: #666;
+		padding: 0.5vw 1vw;
+		font-size: 2.5vw;
+		font-family: 'Shadows Into Light', cursive;
+		line-height: 150%;
+	}
+	.halfie h4 {
+		color: #666;
+		text-align: right;
+		padding: 0.5vw 1vw;
+		font-size: 1.5vw;
+		font-family: 'Shadows Into Light', cursive;
+	}
+	.halfie p {
+		color: #EEE;
+		padding: 0.5vw 1vw;
+		font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+	}
 
 #container {
 	width: 100%;
@@ -67,7 +105,7 @@ body {
 
 #header {
 	position: absolute;
-	top: 20px;
+	top: 2.5vw;
 	left: 0;
 	width: 100%;
 	text-align: center;
@@ -76,9 +114,20 @@ body {
 	font-family: 'Shadows Into Light', cursive;
 	color: #FFF;
 	pointer-events: none;
+	transition: left 0.3s ease-in-out;
 }
+	#header.left {
+		left: -25%;
+	}
+	#header.right {
+		left: 25%;
+	}
+	#header p {
+		font-size: 5vw;
+	}
 	#header h1 {
-		padding: 12px 0 0 0;
+		padding: 1.5vw 0 0 0;
+		font-size: 8vw;
 	}
 	#header span {
 		display: inline-block;
@@ -99,7 +148,7 @@ body {
 	WRITER
 */
 #writer {
-	left: 0;
+	/*left: 0;*/
 }
 	#writer h2 a {
 		color: #C22D64;
@@ -120,8 +169,6 @@ body {
 	left: 0;
 	top: 0;
 	opacity: 0;
-	/*background: url(img/background-1.jpg) no-repeat center 0;
-	background-size: cover;*/
 	transition: opacity 0.8s ease-in-out;
 	-webkit-perspective: 500px;
 	-moz-perspective: 500px;
@@ -798,10 +845,36 @@ body {
 }
 
 /*
+	AMPERSAND
+*/
+#amper {
+	position: absolute;
+	color: #FFF;
+	font-family: 'Pacifico', cursive;
+	font-size: 5vh;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	z-index: 1;
+	transform: translateY(-50%);
+	pointer-events: none;
+	transition: all 0.3s ease-in-out;
+}
+	#amper.right {
+		left: 25%;
+		top: 33%;
+	}
+	#amper.left {
+		left: -25%;
+		top: 33%;
+	}
+
+/*
 	DEVELOPER
 */
 #developer {
-	right: 0;
+	/*right: 0;*/
 }
 	#developer h2 a {
 		color: #FFDD1B;
@@ -823,8 +896,6 @@ body {
 	width: 100%;
 	height: 100%;
 	opacity: 0;
-	/*background: url(img/background-1.jpg) no-repeat -50% 0;
-	background-size: cover;*/
 	transition: opacity 0.8s ease-in-out;
 }
 	#developer:hover #bubbles {
