@@ -179,15 +179,8 @@ function step(timestamp) {
 }
 window.requestAnimationFrame(step);
 
-document.addEventListener('keydown', function(e){
-	if (e.which === 32) {
-		window.requestAnimationFrame(step);
-	}
-});
-
 // Detect hashchange
 function hashCheck(e) {
-	console.log(e, window.location.hash);
 	if (window.location.hash === '#writer') {
 		setDisplay(1);
 	} else if (window.location.hash === '#developer') {
@@ -233,3 +226,245 @@ function setDisplay(display) {
 		clearPosition(closer);
 	}
 }
+
+function Laker(canvas, source) {
+	var self = this,
+		// Basic settings
+		settings = {
+			speed: 1,
+			scale: 0.5,
+			waves: 3
+		},
+
+		// Calculate usable settings
+		speed = settings.speed / 4,
+		scale = settings.scale / 2,
+		waves = settings.waves / 1,
+
+		// Frame stuff
+		offset = 0,
+		frame = 0,
+		max_frames = 0,
+		frames = [],
+		orig_idata = undefined,
+
+		// For the actual drawing of the waves
+		context = canvas.getContext('2d'),
+		image = new Image(),
+		image_loaded = false,
+		calculating = false,
+		last_draw = undefined,
+
+		// Track canvas size
+		CANVAS_WIDTH = 0,
+		CANVAS_HEIGHT = 0;
+
+	// Allow cross origin image loading
+	image.crossOrigin = 'Anonymous';
+
+	// Add resize watcher
+	function setDimensions(e) {
+		CANVAS_WIDTH = canvas.clientWidth;
+		CANVAS_HEIGHT = canvas.clientHeight;
+		canvas.width = CANVAS_WIDTH;
+		canvas.height = CANVAS_HEIGHT;
+	}
+	setDimensions();
+	window.addEventListener('resize', setDimensions);
+
+	// Manually do what background-size: cover does
+	function drawImageProp(ctx, img, dx, dy, dWidth, dHeight, offsetX, offsetY) {
+		if (arguments.length === 2) {
+			dx = dy = 0;
+			dWidth = ctx.canvas.width;
+			dHeight = ctx.canvas.height;
+		}
+
+		/// Default offset is center
+		offsetX = offsetX ? offsetX : 0.5;
+		offsetY = offsetY ? offsetY : 0.5;
+
+		/// Keep bounds [0.0, 1.0]
+		if (offsetX < 0) {
+			offsetX = 0;
+		}
+		if (offsetY < 0) {
+			offsetY = 0;
+		}
+		if (offsetX > 1) {
+			offsetX = 1;
+		}
+		if (offsetY > 1) {
+			offsetY = 1;
+		}
+
+		var iWidth = img.width,
+			iHeight = img.height,
+			ratio = Math.min(dWidth / iWidth, dHeight / iHeight),
+			nWidth = iWidth * ratio,
+			nHeight = iHeight * ratio,
+			sx, sy, sWidth, sHeight,
+			aspect = 1;
+
+		/// Decide which gap to fill    
+		if (nWidth < dWidth) {
+			aspect = dWidth / nWidth;
+		}
+		if (nHeight < dHeight) {
+			aspect = dHeight / nHeight;
+		}
+		nWidth *= aspect;
+		nHeight *= aspect;
+
+		/// Calculate source rectangle
+		sWidth = iWidth / (nWidth / dWidth);
+		sHeight = iHeight / (nHeight / dHeight);
+
+		sx = (iWidth - sWidth) * offsetX;
+		sy = (iHeight - sHeight) * offsetY;
+
+		/// Make sure source rectangle is valid
+		if (sx < 0) {
+			sx = 0;
+		}
+		if (sy < 0) {
+			sy = 0;
+		}
+		if (sWidth > iWidth) {
+			sWidth = iWidth;
+		}
+		if (sHeight > iHeight) {
+			sHeight = iHeight;
+		}
+
+		/// Fill image in destination rectangle
+		ctx.drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+	}
+
+	// Calculate a rippled frame
+	function generateFrame(ctx) {
+		var obj_dict = ctx.getImageData(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT),
+			obj_data = obj_dict.data,
+			pixel = 0;
+
+		for (var y = 0; y < CANVAS_HEIGHT; y++) {
+			for (var x = 0; x < CANVAS_WIDTH; x++) {
+				var disp = (scale * 10 * (Math.sin((CANVAS_HEIGHT / (y / waves)) + (-offset)))) | 0,
+					j = ((disp + y) * CANVAS_WIDTH + x + disp) * 4;
+
+				if (j < 0) {
+					pixel += 4;
+					continue;
+				}
+
+				var m = j % (CANVAS_WIDTH * 4),
+					n = scale * 10 * (y / waves);
+				if (m < n || m > (CANVAS_WIDTH * 4) - n) {
+					var sign = y < CANVAS_WIDTH / 2 ? 1 : -1;
+					obj_data[pixel]   = obj_data[pixel + 4 * sign];
+					obj_data[++pixel] = obj_data[pixel + 4 * sign];
+					obj_data[++pixel] = obj_data[pixel + 4 * sign];
+					obj_data[++pixel] = obj_data[pixel + 4 * sign];
+					pixel++;
+					continue;
+				}
+
+				if (orig_idata[j+3] != 0) {
+					obj_data[pixel]   = orig_idata[j];
+					obj_data[++pixel] = orig_idata[++j];
+					obj_data[++pixel] = orig_idata[++j];
+					obj_data[++pixel] = orig_idata[++j];
+					pixel++;
+				} else {
+					obj_data[pixel]   = obj_data[pixel - CANVAS_WIDTH * 4];
+					obj_data[++pixel] = obj_data[pixel - CANVAS_WIDTH * 4];
+					obj_data[++pixel] = obj_data[pixel - CANVAS_WIDTH * 4];
+					obj_data[++pixel] = obj_data[pixel - CANVAS_WIDTH * 4];
+					pixel++;
+				}
+			}
+		}
+
+		return obj_dict;
+	}
+
+	// For when the image loads
+	function loaded(e) {
+		if (image_loaded === true || calculating === true) {
+			return false;
+		}
+
+		// Reset drawing variables
+		offset = 0;
+		frame = 0;
+		frames = [];
+		max_frames = undefined;
+		calculating = true;
+
+		// Draw the image flipped vertically
+		context.save();
+		context.scale(1, -1);
+		drawImageProp(context, image, 0, -CANVAS_HEIGHT, CANVAS_WIDTH, CANVAS_HEIGHT);
+		context.restore();
+
+		// Store the unaltered image data
+		orig_idata = context.getImageData(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT).data;
+
+		image_loaded = true;
+		calculating = false;
+	}
+
+	// Determine when the image is loaded
+	image.addEventListener('load', loaded, false);
+	image.src = source;
+
+	// Set rendering steps
+	function step(timestamp) {
+		if (last_draw === undefined) {
+			last_draw = timestamp;
+		}
+		if (timestamp - last_draw >= 33) {
+			last_draw = timestamp;
+
+			// Generate a new frame if necessary
+			if (max_frames === undefined && image_loaded === true) {
+				// That's enough frames
+				if (offset > speed * (6 / speed)) {
+					offset = 0;
+					max_frames = frame - 1;
+					frame = 0;
+
+				// Keep making frames
+				} else {
+					offset += speed;
+					frames.push(generateFrame(context));
+				}
+
+				// Draw the frame
+				context.putImageData(frames[frame], 0, 0);
+				frame++;
+
+			// Run this if there are already enough precalculate frames
+			} else {
+				if (max_frames === undefined || frame < max_frames) {
+					frame++;
+				} else {
+					frame = 0;
+				}
+				if (frames[frame] !== undefined) {
+					context.putImageData(frames[frame], 0, 0);
+				}
+			}
+		}
+		window.requestAnimationFrame(step);
+	}
+	window.requestAnimationFrame(step);
+
+	// Force recalculation on resize
+	window.addEventListener('resize', function(e){
+		image_loaded = false;
+		loaded(e);
+	});
+}
+var ripple = document.querySelector('#ripple'),
+	lake = new Laker(ripple, ripple.dataset.image);
