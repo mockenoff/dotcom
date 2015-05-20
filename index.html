@@ -258,10 +258,32 @@
 	</div>
 
 	<div id="contact">
-		<h2>Get in Contact</h2>
-		<canvas id="ripple" data-image="http://i.imgur.com/Wp1S093.jpg"></canvas>
+		<canvas id="ripple" data-image="css/img/background-2.jpg"></canvas>
+
+		<section class="halfie left">
+			<div class="vmiddle">
+				<h2><span>Fill my</span> <a href="mailto:timothycpoon@gmail.com" title="Gmail">Gmail</a></h2>
+				<h2><span>Tweet my</span> <a href="https://twitter.com/mockenoff" title="Twitter">Twitter</a></h2>
+				<h2><span>Browse my</span> <a href="https://www.linkedin.com/in/timothypoon" title="LinkedIn">LinkedIn</a></h2>
+				<h2><span>Check my</span> <a href="http://www.facebook.com/timpoon" title="Facebook">Facebook</a></h2>
+			</div>
+		</section>
+
+		<section class="halfie right">
+			<div class="vmiddle">
+				<h2><span>Look at my</span> <a href="https://instagram.com/mockenoff" title="Instagram">Instagram</a></h2>
+				<div id="instafeed"></div>
+			</div>
+		</section>
+
+		<p id="copyright">© 2015 Tim Poon. All rights reserved.</p>
 	</div>
 
+	<script type="text/template" id="instafeed-template">
+		<a href="[[link]]" title="[[caption]]"><img src="[[image]]" /></a>
+	</script>
+
+	<script src="js/feed.js"></script>
 	<script src="js/laker.js"></script>
 	<script src="js/main.js"></script>
 </body>

@@ -8,8 +8,9 @@ var devbox = document.querySelector('#developer'),
 	closer = document.querySelector('#closer'),
 	ripple = document.querySelector('#ripple'),
 
-	// Make the lake ripples
-	lake = new Laker(ripple, ripple.dataset.image),
+	// InstaFeed stuff
+	feed = document.querySelector('#instafeed'),
+	ftemplate = document.querySelector('#instafeed-template').innerHTML,
 
 	// Specifically for particles
 	canvas = devbox.querySelector('#bubbles'),
@@ -230,3 +231,37 @@ function setDisplay(display) {
 		clearPosition(closer);
 	}
 }
+
+// Allow keyboard navigation
+document.addEventListener('keydown', function(e){
+	var k = e.keyCode || e.which;
+
+	if (k === 27) {
+		window.location.hash = '#';
+		e.preventDefault();
+	} else if (k === 37) {
+		if (window.location.hash === '#developer') {
+			window.location.hash = '#';
+		} else {
+			window.location.hash = '#writer';
+		}
+	} else if (k === 39) {
+		if (window.location.hash === '#writer') {
+			window.location.hash = '#';
+		} else {
+			window.location.hash = '#developer';
+		}
+	}
+});
+
+// Make the lake ripples
+if (window.Worker !== undefined) {
+	var lake = new Laker(ripple, ripple.dataset.image);
+}
+
+// Create the Instagram feed
+var html = '';
+for (var i = 0, l = feed_data.length; i < l; i++) {
+	html += ftemplate.replace(/\[\[link\]\]/g, feed_data[i].link).replace(/\[\[caption\]\]/g, feed_data[i].caption).replace(/\[\[image\]\]/g, feed_data[i].image);
+}
+feed.innerHTML = html;

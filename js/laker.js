@@ -2,9 +2,9 @@ function Laker(canvas, source) {
 	var self = this,
 		// Basic settings
 		settings = {
-			speed: 1,
+			speed: 0.75,
 			scale: 0.5,
-			waves: 3
+			waves: 6
 		},
 
 		// Calculate usable settings

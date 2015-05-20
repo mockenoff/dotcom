@@ -22,6 +22,11 @@ body {
 	line-height: 150%;
 	font-family: Lato, Helvetica, Arial, sans-serif;
 }
+.vmiddle {
+	top: 50%;
+	position: relative;
+	transform: translateY(-50%);
+}
 
 /*
 	MAIN
@@ -1089,21 +1094,56 @@ body {
 		display: block;
 		width: 100%;
 		height: 100%;
-		background: linear-gradient(180deg, rgba(34, 34, 34, 0.8) 0, rgba(68, 68, 68, 0.8) 100%);
+		background: linear-gradient(180deg, rgba(34, 34, 34, 0.5) 0, rgba(68, 68, 68, 0.5) 100%);
 		position: absolute;
 		top: 0;
 		left: 0;
 	}
 
-#contact h2 {
+#contact .halfie h2 {
 	z-index: 5;
 	position: relative;
 	text-align: center;
-	padding: 4vh 0 0 0;
+	padding: 4.5vh 0 0 0;
 	color: #FFF;
 	font-family: 'Shadows Into Light', cursive;
 	font-size: 5vw;
+	top: 0;
+	transform: none;
 }
+	#contact .halfie h2:first-child {
+		padding: 0;
+	}
+	#contact h2 span {
+		top: 0;
+		position: relative;
+		line-height: 100%;
+	}
+	#contact h2 a {
+		line-height: 100%;
+	}
+		#contact .halfie h2:nth-child(2n+1) a {
+			color: #C22D64;
+			font-size: 5vw;
+			font-family: 'Pacifico', cursive;
+			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+			transition: text-shadow 0.3s ease-in-out;
+		}
+		#contact .halfie h2:nth-child(2n+1) a:hover {
+			color: #D85485;
+			text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+		}
+		#contact .halfie h2:nth-child(2n) a {
+			color: #FFDD1B;
+			font-family: 'Monoton', cursive;
+			font-size: 4vw;
+			text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+			transition: text-shadow 0.3s ease-in-out;
+		}
+		#contact .halfie h2:nth-child(2n) a:hover {
+			color: #FFF2A8;
+			text-shadow: 0 0 6px rgba(255, 255, 255, 1.0);
+		}
 
 #contact .halfie {
 	z-index: 4;
@@ -1116,4 +1156,36 @@ body {
 	top: 0;
 	width: 100%;
 	height: 100%;
+}
+
+#instafeed {
+	font-size: 0;
+	line-height: 0;
+	white-space: nowrap;
+	margin-top: 2.5vh;
+}
+#instafeed a {
+	display: inline-block;
+	width: 32%;
+	box-sizing: border-box;
+	margin-right: 1.5%;
+}
+	#instafeed img {
+		width: 100%;
+	}
+
+/*
+	COPYRIGHT
+*/
+#copyright {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	text-align: center;
+	z-index: 5;
+	font-family: 'Shadows Into Light', cursive;
+	font-size: 1vw;
+	color: #666;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
