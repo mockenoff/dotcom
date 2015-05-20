@@ -462,6 +462,10 @@ function Laker(canvas, source) {
 
 	// Force recalculation on resize
 	window.addEventListener('resize', function(e){
+		if (canvas.clientHeight === CANVAS_HEIGHT && canvas.clientWidth === CANVAS_WIDTH) {
+			return false;
+		}
+
 		image_loaded = false;
 		loaded(e);
 	});
