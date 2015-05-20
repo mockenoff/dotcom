@@ -5,7 +5,7 @@ html, body {
 	height: 100%;
 }
 
-html, body, img, form, input, header, nav, div, ol, ul, li, h1, h2, h3, h4, span, p, a, section, textarea, iframe {
+html, body, img, form, input, header, nav, div, ol, ul, li, h1, h2, h3, h4, h5, h6, span, p, a, section, textarea, iframe {
 	border: 0;
 	padding: 0;
 	margin: 0;
@@ -73,25 +73,44 @@ body {
 			color: #FFF;
 			font-family: 'Shadows Into Light', cursive;
 			font-size: 3vw;
+			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 		}
 	.halfie h3 {
 		color: #666;
-		padding: 0.5vw 1vw;
+		padding: 0.5vw 1vh 0 1vw;
 		font-size: 2.5vw;
 		font-family: 'Shadows Into Light', cursive;
 		line-height: 150%;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 	}
 	.halfie h4 {
 		color: #666;
 		text-align: right;
-		padding: 0.5vw 1vw;
+		padding: 0 1vw 3.5vh 1vw;
 		font-size: 1.5vw;
 		font-family: 'Shadows Into Light', cursive;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+	}
+	.halfie h5 {
+		color: #ED9;
+		text-align: center;
+		font-size: 4vw;
+		font-family: 'Shadows Into Light', cursive;
+		line-height: 100%;
+		padding: 6vh 0 1vh 0;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+	}
+	.halfie h6 {
+		font-size: 2vw;
+		line-height: 100%;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+		padding: 3vh 1vw 0 1vw;
 	}
 	.halfie p {
 		color: #EEE;
 		padding: 0.5vw 1vw;
 		font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 	}
 
 #container {
@@ -124,10 +143,12 @@ body {
 	}
 	#header p {
 		font-size: 5vw;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 	}
 	#header h1 {
 		padding: 1.5vw 0 0 0;
 		font-size: 8vw;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 	}
 	#header span {
 		display: inline-block;
@@ -845,6 +866,60 @@ body {
 }
 
 /*
+	WRITER DETAILS
+*/
+#writer-details {
+	overflow-y: scroll;
+	background: linear-gradient(180deg, rgba(34, 34, 34, 0.8) 0, rgba(68, 68, 68, 0.8) 100%);
+}
+#writer-details a,
+#writer-details a:visited {
+	color: #C22D64;
+	font-family: 'Shadows Into Light', cursive;
+	font-size: 2.5vw;
+	line-height: 100%;
+}
+	#writer-details a:hover,
+	#writer-details a:focus,
+	#writer-details a:active {
+		color: #D85485;
+	}
+
+#writer-details h3 {
+	color: #FFDD1B;
+}
+#writer-details h5 {
+	color: #FFDD1B;
+	font-family: 'Pacifico', cursive;
+}
+#writer-details h6 span {
+	color: #AAA;
+	float: right;
+	font-size: 1.5vw;
+	font-family: 'Shadows Into Light', cursive;
+}
+
+#writer-details p.info {
+	padding-bottom: 0;
+}
+#writer-details p.outlet {
+	text-align: right;
+	color: #AAA;
+	font-size: 1vw;
+	padding-top: 0;
+}
+
+#writer-details > ul:last-child {
+	padding: 0.7vh 0 4vh 0;
+}
+#writer-details ul ul li {
+	color: #EEE;
+	padding: 0 1vw;
+	font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/*
 	AMPERSAND
 */
 #amper {
@@ -859,6 +934,7 @@ body {
 	z-index: 1;
 	transform: translateY(-50%);
 	pointer-events: none;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 	transition: all 0.3s ease-in-out;
 }
 	#amper.right {
@@ -868,6 +944,33 @@ body {
 	#amper.left {
 		left: -25%;
 		top: 33%;
+	}
+
+/*
+	CLOSER
+*/
+#closer {
+	position: absolute;
+	color: #FFF;
+	display: block;
+	bottom: 0;
+	left: 50%;
+	font-size: 5vw;
+	line-height: 100%;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 5;
+	transition: all 0.3s ease-in-out;
+}
+	#closer.left {
+		opacity: 1;
+		left: 0;
+		pointer-events: all;
+	}
+	#closer.right {
+		opacity: 1;
+		left: calc(100% - 5vw);
+		pointer-events: all;
 	}
 
 /*
@@ -902,3 +1005,67 @@ body {
 		opacity: 1;
 	}
 
+/*
+	DEVELOPER DETAILS
+*/
+#developer-details {
+	overflow-y: scroll;
+	background: linear-gradient(180deg, rgba(34, 34, 34, 0.8) 0, rgba(68, 68, 68, 0.8) 100%);
+}
+#developer-details a,
+#developer-details a:visited {
+	color: #FFDD1B;
+	font-family: 'Shadows Into Light', cursive;
+	font-size: 2.5vw;
+	line-height: 100%;
+}
+	#developer-details a:hover,
+	#developer-details a:focus,
+	#developer-details a:active {
+		color: #FFF2A8;
+	}
+
+#developer-details h3 {
+	color: #C22D64;
+}
+#developer-details h5 {
+	color: #C22D64;
+	font-family: 'Monoton', cursive;
+}
+#developer-details h6 span {
+	color: #AAA;
+	float: right;
+	font-size: 1.5vw;
+	font-family: 'Shadows Into Light', cursive;
+}
+
+#developer-details > ul:last-child {
+	padding: 0.7vh 0 4vh 0;
+}
+	#developer-details ul ul li {
+		color: #AAA;
+		padding: 0 1vw 0 3vw;
+		font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+		list-style: square outside;
+		position: relative;
+	}
+		#developer-details ul ul li:before {
+			content: '•';
+			color: #AAA;
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 1vw;
+		}
+
+/*
+	CONTACT
+*/
+#contact {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+	background: linear-gradient(0deg, rgba(34, 34, 34, 1.0) 0, rgba(68, 68, 68, 1.0) 100%);
+}

@@ -5,6 +5,7 @@ var devbox = document.querySelector('#developer'),
 	writails = document.querySelector('#writer-details'),
 	header = document.querySelector('#header'),
 	amper = document.querySelector('#amper'),
+	closer = document.querySelector('#closer'),
 
 	// Specifically for particles
 	canvas = devbox.querySelector('#bubbles'),
@@ -213,6 +214,7 @@ function setDisplay(display) {
 		clearPosition(devtails).classList.add('rightest');
 		clearPosition(header).classList.add('right');
 		clearPosition(amper).classList.add('right');
+		clearPosition(closer).classList.add('right');
 	} else if (display === 2) {
 		clearPosition(writails).classList.add('leftest');
 		clearPosition(writer).classList.add('lefter');
@@ -220,6 +222,7 @@ function setDisplay(display) {
 		clearPosition(devtails).classList.add('right');
 		clearPosition(header).classList.add('left');
 		clearPosition(amper).classList.add('left');
+		clearPosition(closer).classList.add('left');
 	} else {
 		clearPosition(writails).classList.add('lefter');
 		clearPosition(writer).classList.add('left');
@@ -227,5 +230,6 @@ function setDisplay(display) {
 		clearPosition(devtails).classList.add('righter');
 		clearPosition(header);
 		clearPosition(amper);
+		clearPosition(closer);
 	}
 }
