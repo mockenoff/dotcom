@@ -201,7 +201,13 @@ window.addEventListener('hashchange', hashCheck);
 
 // Remove all position classes
 function clearPosition(elem) {
-	elem.classList.remove('leftest', 'lefter', 'left', 'right', 'righter', 'rightest');
+	// Can't do multiple arguments for remove with IE11
+	elem.classList.remove('leftest');
+	elem.classList.remove('lefter');
+	elem.classList.remove('left');
+	elem.classList.remove('right');
+	elem.classList.remove('righter');
+	elem.classList.remove('rightest');
 	return elem;
 }
 
