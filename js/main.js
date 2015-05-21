@@ -266,7 +266,7 @@ document.addEventListener('keydown', function(e){
 
 // Make the lake ripples
 if (window.Worker !== undefined) {
-	var lake = new Laker(ripple, ripple.dataset.image);
+	var lake = new Laker(ripple, ripple.dataset === undefined ? ripple.getAttribute('image') : ripple.dataset.image);
 }
 
 // Create the Instagram feed

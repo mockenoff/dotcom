@@ -1,5 +1,3 @@
-var self = this;
-
 function generateFrame(new_data, old_data, width, height, scale, waves, offset) {
 	var data = new_data.data,
 		pixel = 0;
@@ -47,7 +45,7 @@ function generateFrame(new_data, old_data, width, height, scale, waves, offset) 
 }
 
 onmessage = function(e){
-	self.postMessage({
+	postMessage({
 		new_data: generateFrame(e.data.new_data, e.data.old_data, e.data.width, e.data.height, e.data.scale, e.data.waves, e.data.offset)
 	});
 };
