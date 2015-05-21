@@ -186,11 +186,13 @@ window.requestAnimationFrame(step);
 
 // Detect hashchange
 function hashCheck(e) {
-	if (window.location.hash === '#writer') {
+	var hash = window.location.hash;
+
+	if (hash === '#writer') {
 		setDisplay(1);
-	} else if (window.location.hash === '#developer') {
+	} else if (hash === '#developer') {
 		setDisplay(2);
-	} else {
+	} else if (hash === '#' || hash === '') {
 		setDisplay(0);
 	}
 }
@@ -251,6 +253,8 @@ document.addEventListener('keydown', function(e){
 		} else {
 			window.location.hash = '#developer';
 		}
+	} else if (k === 40) {
+		window.location = '#contact';
 	}
 });
 

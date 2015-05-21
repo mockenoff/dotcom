@@ -163,7 +163,7 @@ function Laker(canvas, source) {
 		if (last_draw === undefined) {
 			last_draw = timestamp;
 		}
-		if (timestamp - last_draw >= 33) {
+		if (timestamp - last_draw >= 50) {
 			last_draw = timestamp;
 
 			// Generate a new frame if necessary
