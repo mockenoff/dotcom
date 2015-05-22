@@ -6,6 +6,7 @@ var devbox = document.querySelector('#developer'),
 	header = document.querySelector('#header'),
 	amper = document.querySelector('#amper'),
 	closer = document.querySelector('#closer'),
+	saver = closer.querySelector('a.save'),
 	ripple = document.querySelector('#ripple'),
 
 	// InstaFeed stuff
@@ -221,6 +222,7 @@ function setDisplay(display) {
 		clearPosition(header).classList.add('right');
 		clearPosition(amper).classList.add('right');
 		clearPosition(closer).classList.add('right');
+		saver.href = saver.getAttribute('data-writer');
 	} else if (display === 2) {
 		clearPosition(writails).classList.add('leftest');
 		clearPosition(writer).classList.add('lefter');
@@ -229,6 +231,7 @@ function setDisplay(display) {
 		clearPosition(header).classList.add('left');
 		clearPosition(amper).classList.add('left');
 		clearPosition(closer).classList.add('left');
+		saver.href = saver.getAttribute('data-developer');
 	} else {
 		clearPosition(writails).classList.add('lefter');
 		clearPosition(writer).classList.add('left');

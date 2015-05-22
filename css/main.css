@@ -210,9 +210,9 @@ body {
 	display: block;
 	position: absolute;
 	width: 1vw;
-	height: 0.125vw;
+	height: 1vw;
 	max-width: 8px;
-	max-height: 1px;
+	max-height: 8px;
 	left: 50%;
 	top: 50%;
 	border-radius: 0.5vw;
@@ -892,9 +892,6 @@ body {
 		color: #D85485;
 	}
 
-#writer-details h3 {
-	color: #FFDD1B;
-}
 #writer-details h5 {
 	color: #FFDD1B;
 	font-family: 'Pacifico', cursive;
@@ -959,31 +956,66 @@ body {
 */
 #closer {
 	position: absolute;
-	color: #FFF;
-	display: block;
+	width: 50%;
+	height: 3vw;
 	bottom: 0;
-	left: 50%;
-	font-size: 5vw;
-	line-height: 100%;
+	left: 25%;
 	opacity: 0;
 	pointer-events: none;
 	z-index: 5;
 	transition: all 0.3s ease-in-out;
 }
-	#closer:hover,
-	#closer:focus {
-		transform: rotate(180deg);
+	#closer a {
+		color: #FFF;
+		display: block;
+		width: 3vw;
+		height: 3vw;
+		font-size: 0;
+		text-align: center;
+		vertical-align: middle;
+		transition: all 0.3s ease-in-out;
+		overflow: hidden;
+		text-indent: -99999px;
+		margin-top: 0.5vh;
+		pointer-events: all;
+		position: absolute;
+		bottom: 0;
+		left: calc(50% - 1.5vw);
+		opacity: 0.15;
 	}
+		#closer a.close {
+			background: url(img/close.png) no-repeat 0 0;
+			background-size: contain;
+		}
+		#closer a.save {
+			background: url(img/save.png) no-repeat 0 0;
+			background-size: contain;
+		}
+		#closer a:hover,
+		#closer a:focus {
+			opacity: 1;
+			transform: rotate(360deg);
+		}
 	#closer.left {
 		opacity: 1;
 		left: 0;
-		pointer-events: all;
 	}
+		#closer.left a.close {
+			left: 0;
+		}
+		#closer.left a.save {
+			left: calc(100% - 3vw);
+		}
 	#closer.right {
 		opacity: 1;
-		left: calc(100% - 5vw);
-		pointer-events: all;
+		left: 50%;
 	}
+		#closer.right a.save {
+			left: 0;
+		}
+		#closer.right a.close {
+			left: calc(100% - 3vw);
+		}
 
 /*
 	DEVELOPER
@@ -1037,9 +1069,6 @@ body {
 		color: #FFF2A8;
 	}
 
-#developer-details h3 {
-	color: #C22D64;
-}
 #developer-details h5 {
 	color: #C22D64;
 	font-family: 'Monoton', cursive;
