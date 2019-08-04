@@ -15,34 +15,28 @@ class InstaFeed(object):
 
 	"""
 
-	MEDIA_ENDPOINT = 'https://api.instagram.com/v1/users/{user_id}/media/recent/?client_id={client_id}'
+	FILE_BASE = '{filename}'
+	LINK_BASE = 'https://www.instagram.com/p/{shortcode}/'
+	MEDIA_ENDPOINT = 'https://www.instagram.com/{username}/?__a=1'
 
-	def __init__(self, client_id, user_id, max_items=9):
+	def __init__(self, username, max_items=9):
 		""" Initialize values
 
-		:param client_id: Client ID for the Instagram API
-		:type client_id: str
-		:param user_id: ID of user to generate feed
-		:type user_id: int
+		:param username: ID of user to generate feed
+		:type username: str
 		:param max_items: Maximum number of items to fetch
 		:type max_items: int
 
 		"""
-		if not isinstance(client_id, str):
-			raise TypeError('Client ID must be a string')
-
-		try:
-			user_id = int(user_id)
-		except TypeError:
-			raise TypeError('User ID must be an int')
+		if not isinstance(username, str):
+			raise TypeError('username must be a str')
 
 		try:
 			max_items = int(max_items)
 		except TypeError:
 			raise TypeError('Item maximum must be an int')
 
-		self.client_id = client_id
-		self.user_id = user_id
+		self.username = username
 		self.max_items = max_items
 
 	def fetch_feed(self):
@@ -51,42 +45,54 @@ class InstaFeed(object):
 		:returns: dict
 
 		"""
-		req = requests.get(
-			self.MEDIA_ENDPOINT.format(user_id=self.user_id, client_id=self.client_id))
+		req = requests.get(self.MEDIA_ENDPOINT.format(username=self.username))
 
 		if req.status_code != 200:
 			req.raise_for_status()
 
 		data = json.loads(req.text)
-		return data['data']
 
-	def make_json(self, file_name=None):
+		return data['graphql']['user']['edge_owner_to_timeline_media']['edges']
+
+	def make_json(self, filename=None):
 		""" Create the JSON for the feed
 
-		:param file_name: Optional name of file to write JSON
-		:type file_name: str
+		:param filename: Optional name of file to write JSON
+		:type filename: str
 		:returns: str
 
 		"""
-		if file_name != None and not isinstance(file_name, str):
-			raise TypeError('File name must be a string')
+		if filename != None and not isinstance(filename, str):
+			raise TypeError('File name must be a str')
 
 		ret = []
 		data = self.fetch_feed()
+
 		for i in range(0, self.max_items):
 			ret.append({
-				'link': data[i]['link'],
-				'image': data[i]['images']['standard_resolution']['url'],
-				'caption': data[i]['caption']['text'],
+				'link': self.LINK_BASE.format(shortcode=data[i]['node']['shortcode']),
+				'image': data[i]['node']['display_url'],
+				'thumbnail': data[i]['node']['thumbnail_src'],
+				'caption': data[i]['node']['edge_media_to_caption']['edges'][0]['node']['text'],
+				'location': data[i]['node']['location']['name'] if data[i]['node']['location'] else None,
+				'is_video': data[i]['node']['is_video'],
+				'dimensions': {
+					'width': data[i]['node']['dimensions']['width'],
+					'height': data[i]['node']['dimensions']['height'],
+				},
 			})
 
 		ret = json.dumps(ret)
-		if file_name != None:
-			fhandle = open(file_name,'w')
+
+		if filename:
+			fhandle = open(self.FILE_BASE.format(filename=filename),'w')
 			fhandle.write('var feed_data = {data};'.format(data=ret))
 			fhandle.close()
+		else:
+			print(ret)
 
 		return ret
 
-FEED = InstaFeed(client_id='CLIENT_ID', user_id=18297258, max_items=3)
-FEED.make_json(file_name='js/feed.js')
+
+FEED = InstaFeed(username='mockenoff', max_items=3)
+FEED.make_json(filename='js/feed.js')
